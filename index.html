@@ -12,22 +12,35 @@
     const root = document.getElementById("root");
 
     //Instead of (props)&{props.text}, we can use ({text})&{text}
-    function Btn({text}) {
-        return <button style={{
-            backgroundColor: "darkgreen",
-            color:"white",
-            padding:"10px 20px",
-            borderRadius:10,
-            border:0,
-        }}>{text}</button>
+    function Btn({text, onClick}) {
+        return (
+            <button 
+                onClick={onClick}
+                style={{
+                    backgroundColor: "darkgreen",
+                    color:"white",
+                    padding:"10px 20px",
+                    borderRadius:10,
+                    border:0,
+                }}
+            >
+                {text}
+            </button>
+        )
     }
 
+    //Memorized version of Btn
+    //If parent state is update, then all children will be rerender.
+    //However, if you use React.memo, children that props don't change will not be rerender 
+    const MemorizedBtn = React.memo(Btn);
+     
     function App() {
-        
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
         return (
             <div>
-               <Btn text="Save Changes"/>
-               <Btn text="Continue"/>
+               <MemorizedBtn text={value} onClick={changeValue}/>
+               <MemorizedBtn text="Continue" />
             </div>
         );
     }
