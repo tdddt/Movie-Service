@@ -14,7 +14,9 @@
     function App() {
         const [counter, setCounter] = React.useState(0);
         const onClick = () => {
-            setCounter(counter+1); //modify the value&automatically rerender
+            //setCounter(counter+1); //modify the value&automatically rerender
+            //more safe way based on current value: first argument is current value, return value will be new state
+            setCounter((current)=>current+1);
         };
         return (
         <div>
